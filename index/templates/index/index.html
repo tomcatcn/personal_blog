@@ -76,7 +76,7 @@
     <div class="con">
         <div class="cleft">
             {%for article in articles%}
-            <div class="ccon" data-scroll-reveal="bottom 10px 3 3">
+            <a href="/article/details/{{article.id}}"><div class="ccon" data-scroll-reveal="bottom 10px 3 3">
                 <div class="cctip">{{article.title}}</div>
                 <div class="ccframe">
                     <figure>
@@ -87,7 +87,7 @@
                         <div class="info">{{article.read_nums}}已阅读</div>
                     </div>
                 </div>
-            </div>
+            </div></a>
             {%endfor%}
 
         </div>
