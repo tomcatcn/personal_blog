@@ -16,7 +16,7 @@
         <div class="con">
             <div class="log">个人博客</div>
             <ul>
-                <li><a href="index.html" class="focus">网站首页</a></li>
+                <li><a href="/" class="focus">网站首页</a></li>
                 <li><a href="article/list">文章列表</a>
                     <ul id="sub_nav">
                         {%for category in categorys%}
@@ -32,7 +32,7 @@
                 <li><a href="/article/write/{{u_id}}">发表博客</a></li>
             </ul>
             {% if username %}
-            <div class="act">欢迎:{{username}}   <a href="user/logout">退出</a></div>
+            <div class="act">欢迎:{{username}}   <a href="/user/logout">退出</a></div>
 
             {% else %}
                 <div class="act"><a href="/user/login">登录</a><a href="/user/reg">注册</a></div>
@@ -83,7 +83,7 @@
                         <img width="300" src="static/images/{{article.images}}" alt="">
                     </figure>
                     <div class="ccright">
-                        <p>{{article.content}}</p>
+                        <p>{{article.content | truncatechars:'10'}}</p>
                         <div class="info">{{article.read_nums}}已阅读</div>
                     </div>
                 </div>

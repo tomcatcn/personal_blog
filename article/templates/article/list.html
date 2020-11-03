@@ -61,7 +61,7 @@
                         <img width="300" src="/static/images/{{a.images}}" alt="">
                     </figure>
                     <div class="ccright">
-                        <p>{{a.content}}</p>
+                        <p>{{a.content | truncatechars:'10'}}</p>
                         <div class="info">{{a.read_nums}}已阅读</div>
                     </div>
                 </div>
