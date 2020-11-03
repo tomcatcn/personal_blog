@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/scrollReveal.js"></script>
+    <script src="/static/js/wangEditor.js"></script>
+    <script src="/static/js/system.js"></script>
+</head>
+
+<body>
+    <div id="nav">
+        <div class="con">
+            <div class="log">个人博客</div>
+            <ul>
+                <li><a href="/">网站首页</a></li>
+                <li><a href="/article/list">文章列表</a>
+                    <ul id="sub_nav">
+                         {%for category in categorys%}
+                        <li><a href="">{{category.category_name}}</a></li>
+                        {%endfor%}
+                    </ul>
+                </li>
+                <li><a href="">我的相册</a></li>
+                <li><a href="">时间轴</a></li>
+                <li><a href="">留言</a></a></li>
+                <li><a href="">关于我</a></li>
+                <li><a href="" class="focus">发表博客</a></li>
+            </ul>
+            {% if username %}
+            <div class="act">欢迎:{{username}}   <a href="/user/logout">退出</a></div>
+
+            {% else %}
+                <div class="act"><a href="/user/login">登录</a><a href="/user/reg">注册</a></div>
+
+            {% endif%}
+        </div>
+    </div>
+    <div class="bgimg"></div>
+    <div class="title">
+        <div class="ltip">
+            文章列表
+        </div>
+        <div class="rtip">
+            不要轻易放弃，学习成长的路上，我们长路漫漫，只因学无止境。
+        </div>
+    </div>
+    <div class="con">
+        <div class="cleft">
+            <div class="send">
+                <div class="stitle div">
+                    <input type="text" id="title"> &nbsp;文章标题
+                </div>
+
+                <div id="editor"></div>
+                <input id="id_article" name="article" type="hidden" value="1">
+
+                <div class="sbtn div">
+                    <button id="send">发表</button>
+                </div>
+            </div>
+        </div>
+        <div class="cright">
+            <h3>特别推荐</h3>
+            <div class="line"></div>
+
+        </div>
+    </div>
+    <footer id="footer">
+        <p>Design by <a href=# target="_blank">程序博客</a> <a href="#">备20013433号-1</a></p>
+    </footer>
+    <script>
+        var E = window.wangEditor
+        var editor = new E('#editor')
+        editor.create();
+        //绑定导航条中二级列表的菜单动画
+        $("#nav ul li:nth-child(2)").hover(function () {
+            //找到子类列表，停止当前动画，并显示
+            $(this).children("ul").stop(true, true).show(400);
+        }, function () {
+            //找到子类列表，停止当前动画，并隐藏
+            $(this).children("ul").stop(true, true).hide(400);
+        })
+        //绑定提交按钮的单击事件
+
+    </script>
+</body>
+
+</html>

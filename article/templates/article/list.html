@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文章列表</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/scrollReveal.js"></script>
+    <script src="/static/js/system.js"></script>
+</head>
+
+<body>
+    <div id="nav">
+        <div class="con">
+            <div class="log">个人博客</div>
+            <ul>
+                <li><a href="/">网站首页</a></li>
+                <li><a href="article/list" class="focus">文章列表</a>
+                    <ul id="sub_nav">
+                       {%for category in categorys%}
+                        <li><a href="">{{category.category_name}}</a></li>
+                        {%endfor%}
+                    </ul>
+                </li>
+                <li><a href="">我的相册</a></li>
+                <li><a href="">时间轴</a></li>
+                <li><a href="">留言</a></a></li>
+                <li><a href="">关于我</a></li>
+                <li><a href="/article/write/{{u_id}}">发表博客</a></li>
+            </ul>
+            {% if username %}
+            <div class="act">欢迎:{{username}}   <a href="/user/logout">退出</a></div>
+
+            {% else %}
+                <div class="act"><a href="/user/login">登录</a><a href="/user/reg">注册</a></div>
+
+            {% endif%}
+
+
+        </div>
+    </div>
+    <div class="bgimg"></div>
+    <div class="title">'
+        <div class="ltip">
+            文章列表
+        </div>
+        <div class="rtip">
+            不要轻易放弃，学习成长的路上，我们长路漫漫，只因学无止境。
+        </div>
+    </div>
+    <div class="con">
+        <div class="cleft">
+            {%for a in articles%}
+            <a href="/article/details/{{a.id}}"><div class="ccon" data-scroll-reveal="bottom 10px 3 3">
+                <div class="cctip">{{a.title}}</div>
+                <div class="ccframe">
+                    <figure>
+                        <img width="300" src="/static/images/{{a.images}}" alt="">
+                    </figure>
+                    <div class="ccright">
+                        <p>{{a.content}}</p>
+                        <div class="info">{{a.read_nums}}已阅读</div>
+                    </div>
+                </div>
+            </div></a>
+            {%endfor%}
+        </div>
+        <div class="cright">
+            <h3>特别推荐</h3>
+            <div class="line"></div>
+            {%for article in sp_articles%}
+            <figure data-scroll-reveal="bottom 10px 3 3">
+                <img width="300" src="/static/images/{{article.images}}" alt="">
+                <p class="pchange11">{{article.title}}</p>
+            </figure>
+            {%endfor%}
+
+        </div>
+    </div>
+    <footer id="footer">
+        <p>Design by <a href=# target="_blank">程序博客</a> <a href="#">备20013433号-1</a></p>
+    </footer>
+    <script>
+        //初始化滚动显示框加
+        window.scrollReveal = new scrollReveal({
+            reset: true
+        })
+        //绑定导航条中二级列表的菜单动画
+        $("#nav ul li:nth-child(2)").hover(function () {
+            //找到子类列表，停止当前动画，并显示
+            $(this).children("ul").stop(true, true).show(400);
+        }, function () {
+            //找到子类列表，停止当前动画，并隐藏
+            $(this).children("ul").stop(true, true).hide(400);
+        })
+         //遍历全部的存储对象
+         for (var j = 0; j < localStorage.length; j++) {
+            if (localStorage.key(j).substr(0, 4) == "blog") {
+                var _key = localStorage.key(j);
+                var _val = localStorage.getItem(_key);
+                //将字符串转成对象
+                var obj = JSON.parse(_val);
+                $(".cleft").prepend($(item(obj.title, 'images/toppic01.jpg', obj.txt, '56755')))
+            }
+        }
+    </script>
+</body>
+
+</html>

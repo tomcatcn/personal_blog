@@ -17,26 +17,25 @@
             <div class="log">个人博客</div>
             <ul>
                 <li><a href="index.html" class="focus">网站首页</a></li>
-                <li><a href="list.html">文章列表</a>
+                <li><a href="article/list">文章列表</a>
                     <ul id="sub_nav">
-                        <li><a href="">Python</a></li>
-                        <li><a href="">Python Web</a></li>
-                        <li><a href="">爬虫</a></li>
-                        <li><a href="">人工智能</a></li>
-                        <li><a href="">JS实例索引</a></li>
+                        {%for category in categorys%}
+                        <li><a href="">{{category.category_name}}</a></li>
+                        {%endfor%}
+
                     </ul>
                 </li>
-                <li><a href="pics.html">我的相册</a></li>
+                <li><a href="">我的相册</a></li>
                 <li><a href="">时间轴</a></li>
                 <li><a href="">留言</a></a></li>
                 <li><a href="">关于我</a></li>
-                <li><a href="send.html">发表博客</a></li>
+                <li><a href="/article/write/{{u_id}}">发表博客</a></li>
             </ul>
             {% if username %}
             <div class="act">欢迎:{{username}}   <a href="user/logout">退出</a></div>
 
             {% else %}
-                <div class="act"><a href="user/login">登录</a><a href="user/reg">注册</a></div>
+                <div class="act"><a href="/user/login">登录</a><a href="/user/reg">注册</a></div>
 
             {% endif%}
 
@@ -49,79 +48,59 @@
         <div class="lleft">
             <div class="swipe">
                 <span id="imgleft">&lsaquo;</span>
-                <img id="img" width="752" height="452" src="/static/images/banner01.jpg" alt="">
+                <img id="img" width="752" height="452" src="/static/images/{{left_articles.0.images}}" alt="">
                 <span id="imgright">&rsaquo;</span>
-                <p>爬虫微课5小时python学习路线!</p>
+                <p>{{left_articles.0.title}}</p>
             </div>
+
         </div>
 
         <div class="lright">
+            {%for article in right_articles %}
             <div class="box">
-                <div class="btitle">Linux</div>
-                <img src="/static/images/toppic01.jpg" width="365" height="216" alt="">
-                <p>Linux升级为p3,安装pip,svn</p>
+<!--                {%if forloop.counter0 == 0%}-->
+<!--                <div class="btitle">{{cates.0}}</div>-->
+<!--                {%else%}-->
+<!--                <div class="btitle">{{cates.1}}</div>-->
+<!--                {%endif%}-->
+                <div class="btitle">{{article.categorys.all.0.category_name}}</div>
+                <img src="/static/images/{{article.images}}" width="365" height="216" alt="">
+                <p>{{article.title}}</p>
             </div>
-            <div class="box">
-                <div class="btitle">Python</div>
-                <img src="/static/images/toppic02.jpg" width="365" height="216" alt="">
-                <p>精通Python编程——深入浅出教程</p>
-            </div>
+            {%endfor%}
+
         </div>
     </div>
 
     <!-- 第二屏页面元素 -->
     <div class="con">
         <div class="cleft">
+            {%for article in articles%}
             <div class="ccon" data-scroll-reveal="bottom 10px 3 3">
-                <div class="cctip">Python语言在人工智能方向上的优势</div>
+                <div class="cctip">{{article.title}}</div>
                 <div class="ccframe">
                     <figure>
-                        <img width="300" src="/static/images/toppic01.jpg" alt="">
+                        <img width="300" src="static/images/{{article.images}}" alt="">
                     </figure>
                     <div class="ccright">
-                        <p>方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。方法触发 mouseenter 和 mouseleave 事件。</p>
-                        <div class="info">4566已阅读</div>
+                        <p>{{article.content}}</p>
+                        <div class="info">{{article.read_nums}}已阅读</div>
                     </div>
                 </div>
             </div>
-            <div class="ccon" data-scroll-reveal="bottom 10px 3 3">
-                <div class="cctip">Python语言在人工智能方向上的优势</div>
-                <div class="ccframe">
-                    <figure>
-                        <img width="300" src="/static/images/toppic02.jpg" alt="">
-                    </figure>
-                    <div class="ccright">
-                        <p>方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。方法触发 mouseenter 和 mouseleave 事件。</p>
-                        <div class="info">4566已阅读</div>
-                    </div>
-                </div>
-            </div>
-            <div class="ccon" data-scroll-reveal="bottom 10px 3 3">
-                <div class="cctip">Python语言在人工智能方向上的优势</div>
-                <div class="ccframe">
-                    <figure>
-                        <img width="300" src="/static/images/toppic02.jpg" alt="">
-                    </figure>
-                    <div class="ccright">
-                        <p>方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。方法触发 mouseenter 和 mouseleave 事件。</p>
-                        <div class="info">4566已阅读</div>
-                    </div>
-                </div>
-            </div>
+            {%endfor%}
 
         </div>
         <div class="cright">
             <h3>特别推荐</h3>
             <div class="line"></div>
+            {%for article in sp_articles%}
             <figure data-scroll-reveal="bottom 10px 3 3">
-                <img width="300" src="/static/images/banner01.jpg" alt="">
+                <img width="300" src="/static/images/{{article.images}}" alt="">
+                <p class="pchange11">{{article.title}}</p>
             </figure>
-            <figure data-scroll-reveal="bottom 10px 3 3">
-                <img width="300" src="/static/images/banner02.jpg" alt="">
-            </figure>
-            <figure data-scroll-reveal="bottom 10px 3 3">
-                <img width="300" src="/static/images/banner03.jpg" alt="">
-            </figure>
+            {%endfor%}
+
         </div>
     </div>
 
@@ -130,6 +109,7 @@
     </footer>
 
     <script>
+        console.log('{{articles.0.title}}')
         //初始化滚动显示框加
         window.scrollReveal = new scrollReveal({
             reset: true
@@ -147,14 +127,14 @@
             
             //保存大图切换的地址数组
             var arrImg = [{
-                url: "images/banner01.jpg",
-                tip: '爬虫微课5小时python学习路线!'
+                url: "/static/images/{{left_articles.0.images}}",
+                tip: '{{left_articles.0.title}}'
             }, {
-                url: "images/banner02.jpg",
-                tip: '爬虫微课5小时python学习路线2!'
+                url: "/static/images/{{left_articles.1.images}}",
+                tip: '{{left_articles.1.title}}'
             }, {
-                url: "images/banner03.jpg",
-                tip: '爬虫微课5小时python学习路线3!'
+                url: "/static/images/{{left_articles.2.images}}",
+                tip: '{{left_articles.2.title}}'
             }]
 
             //保存图片数组索引号变量

@@ -43,4 +43,11 @@ def reg_view(request):
         # 不成功重回登录界面
         return redirect('/user/reg')
 
+#处理退出请求
+def logout_view(request):
+    resp = render(request,'user/logout.html')
+    resp.delete_cookie('u_id')
+    return resp
+
+
 
