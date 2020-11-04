@@ -3,6 +3,17 @@ from index.models import *
 from user.models import User
 # Create your views here.
 
+#检查用户权限装饰器
+def check_user(func):
+    def wrapper(request,*args,**kwargs):
+        u_id = request.COOKIES.get('u_id')
+        print('u_id',u_id)
+        if u_id:
+            return func(request, *args, **kwargs)
+        return redirect('/')
+
+    return wrapper
+
 #处理显示文章列表请求
 def list_views(request):
     # 文章类型列
@@ -20,14 +31,15 @@ def list_views(request):
         u_id = request.COOKIES.get('u_id')
         user = User.objects.get(id=u_id)
         username = user.username
-        print('user shi ' + username)
+
         return render(request, 'article/list.html', locals())
 
-
+    print(locals())
     return render(request,'article/list.html',locals())
 
 #处理写请求
-def write_view(request,u_id):
+@check_user
+def write_view(request):
     # 文章类型列
     categorys = Category.objects.all()
 
@@ -35,16 +47,15 @@ def write_view(request,u_id):
     sp_articles = Article.objects.order_by('-read_nums')[:3]
 
     # 数据库查找出用户信息，并显示在主页上
-    u_id = u_id
+    u_id = request.COOKIES.get('u_id')
+
     user = User.objects.get(id=u_id)
     username = user.username
     print('user shi ' + username)
 
     return render(request,'article/write.html',locals())
 
-#处理没有写权限的请求
-def no_write_view(request):
-    return redirect('/') #返回主页
+
 
 #处理写内容,等待异步处理
 def write_submit_view(request):
@@ -68,6 +79,9 @@ def details_view(request,article_id):
         print('user shi ' + username)
         return render(request, 'article/details.html', locals())
     return render(request,'article/details.html',locals())
+
+
+
 
 
 

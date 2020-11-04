@@ -50,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.mymiddleware.MyMw',
+    'middleware.mymiddleware.MyMw2',
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -130,3 +132,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+        'OPTIONS':{
+            'MAX_ENTRIES': 300,
+            'CULL_FREQUENCY': 2,
+        }
+    }
+}

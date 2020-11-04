@@ -19,9 +19,13 @@
                 <li><a href="/" class="focus">网站首页</a></li>
                 <li><a href="article/list">文章列表</a>
                     <ul id="sub_nav">
+                        {% load cache%}
+                        {%cache 1000 list_long%}
                         {%for category in categorys%}
                         <li><a href="">{{category.category_name}}</a></li>
                         {%endfor%}
+
+                        {%endcache%}
 
                     </ul>
                 </li>
@@ -29,7 +33,7 @@
                 <li><a href="">时间轴</a></li>
                 <li><a href="">留言</a></a></li>
                 <li><a href="">关于我</a></li>
-                <li><a href="/article/write/{{u_id}}">发表博客</a></li>
+                <li><a href="/article/write">发表博客</a></li>
             </ul>
             {% if username %}
             <div class="act">欢迎:{{username}}   <a href="/user/logout">退出</a></div>
@@ -107,6 +111,12 @@
     <footer id="footer">
         <p>Design by <a href=# target="_blank">程序博客</a> <a href="#">备20013433号-1</a></p>
     </footer>
+
+    <p>nocache t1 is {{t1}}</p>
+    {% load cache %}
+    {% cache 15 test_t%}
+    <p>cache t1 is {{t1}}</p>
+    {% endcache %}
 
     <script>
         console.log('{{articles.0.title}}')

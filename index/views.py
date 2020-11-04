@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from user.models import User
 from index.models import *
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 
+# @cache_page(30)
 def index_view(request):
     #从数据库中加载内容
     #文章类型列
@@ -22,6 +24,8 @@ def index_view(request):
     #首页左侧的内容，选取阅读量对多的三个
     left_articles = Article.objects.order_by('-read_nums')[:3]
 
+    import time
+    t1 = time.time()
     #检查cookie
     if request.COOKIES.get('u_id'):
         # 数据库查找出用户信息，并显示在主页上
