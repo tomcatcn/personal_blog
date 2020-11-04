@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from index.models import *
 from user.models import User
+from django.core.paginator import Paginator
 # Create your views here.
 
 #检查用户权限装饰器
@@ -14,13 +15,19 @@ def check_user(func):
 
     return wrapper
 
-#处理显示文章列表请求
+#处理显示文章列表请求，分页
 def list_views(request):
     # 文章类型列
     categorys = Category.objects.all()
 
     #查找所有的文章列表
     articles = Article.objects.all()
+
+    #分页
+    paginator = Paginator(articles, 10)
+    #当前文章页，默认1页
+    cur_page = request.GET.get('page', 1)
+    page = paginator.page(cur_page)
 
     # 特别推荐内容,选取数据库阅读数量最多的5个文章
     sp_articles = Article.objects.order_by('-read_nums')[:5]
@@ -79,6 +86,16 @@ def details_view(request,article_id):
         print('user shi ' + username)
         return render(request, 'article/details.html', locals())
     return render(request,'article/details.html',locals())
+
+#测试
+def test_view(request):
+    article_all = Article.objects.all()
+    articles = Paginator(article_all,2)
+
+    cur_page = request.GET.get('page',1)
+    page = articles.page(cur_page)
+
+    return render(request,'article/test.html',locals())
 
 
 

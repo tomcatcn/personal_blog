@@ -53,7 +53,7 @@
     </div>
     <div class="con">
         <div class="cleft">
-            {%for a in articles%}
+            {%for a in page%}
             <a href="/article/details/{{a.id}}"><div class="ccon" data-scroll-reveal="bottom 10px 3 3">
                 <div class="cctip">{{a.title}}</div>
                 <div class="ccframe">
@@ -67,6 +67,29 @@
                 </div>
             </div></a>
             {%endfor%}
+
+            {#上一页#}
+            {%if page.has_previous%}
+            <a href="/article/list?{{page.previous_page_number}}"><span  class="spansele">上一页</span></a>
+            {%else%}
+              <span class="spansele">上一页</span>
+            {%endif%}
+
+            {%for p in paginator.page_range%}
+                    {%if p == page.number%}
+                         <span class="spansele">{{p}}</span>
+                      {%else%}
+                    <a href="/article/list?page={{p}}"><span  class="spansele">{{p}}</span></a>
+                     {%endif%}
+            {%endfor%}
+
+            {#下一页#}
+            {%if page.has_next%}
+                <a href="/article/list?page={{page.next_page_number}}"><span  class="spansele">下一页</span></a>
+             {%else%}
+               <span  class="spansele">下一页</span>
+              {%endif%}
+
         </div>
         <div class="cright">
             <h3>特别推荐</h3>

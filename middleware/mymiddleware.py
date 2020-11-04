@@ -3,8 +3,6 @@ from django.utils.deprecation import MiddlewareMixin
 
 
 class MyMw(MiddlewareMixin):
-
-
     # 每次请求到达主urls会调用
     #返回None 会继续执行 HttpResponse请求终止，直接响应
     def process_request(self,request):

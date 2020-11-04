@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>分页显示</h1>
+{%for article in page%}
+<div>{{article.title}}</div>
+{%endfor%}
+
+{#上一页#}
+{%if page.has_previous%}
+<a href="/article/test?{{page.previous_page_number}}">上一页</a>
+{%else%}
+上一页
+{%endif%}
+
+{%for p in articles.page_range%}
+    {%if p == page.number%}
+    {{p}}
+    {%else%}
+    <a href="/article/test?page={{p}}">{{p}}</a>
+    {%endif%}
+
+{%endfor%}
+
+{#下一页#}
+{%if page.has_next%}
+<a href="/article/test?page={{page.next_page_number}}">下一页</a>
+{%else%}
+下一页
+{%endif%}
+
+</body>
+</html>

@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middleware.mymiddleware.MyMw',
-    'middleware.mymiddleware.MyMw2',
+    # 'middleware.mymiddleware.MyMw2',
 ]
 
 ROOT_URLCONF = 'blog.urls'
